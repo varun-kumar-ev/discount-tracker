@@ -24,7 +24,9 @@ function App() {
     try {
       // Use environment variable for API URL in production, or relative path in development
       const API_URL = process.env.REACT_APP_API_URL || '';
-      const response = await fetch(`${API_URL}/api/search`, {
+      // Remove trailing slash if present
+      const baseUrl = API_URL.replace(/\/$/, '');
+      const response = await fetch(`${baseUrl}/api/search`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

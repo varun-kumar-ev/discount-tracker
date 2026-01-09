@@ -17,11 +17,17 @@ app.use(cors({
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    // If FRONTEND_URL is set, only allow that origin
+    // Log for debugging
+    console.log('CORS check - Origin:', origin);
+    console.log('CORS check - Allowed origins:', allowedOrigins);
+    
+    // If FRONTEND_URL is set, check against allowed origins
     if (process.env.FRONTEND_URL) {
-      if (allowedOrigins.indexOf(origin) !== -1) {
+      // Check exact match or if origin includes vercel.app (for preview deployments)
+      if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('vercel.app')) {
         callback(null, true);
       } else {
+        console.log('CORS rejected for origin:', origin);
         callback(new Error('Not allowed by CORS'));
       }
     } else {
