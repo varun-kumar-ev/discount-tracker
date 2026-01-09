@@ -1,0 +1,28 @@
+# Render Blueprint for Discount Tracker
+# This file allows you to deploy both services at once
+
+services:
+  # Backend API Service
+  - type: web
+    name: discount-tracker-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+    rootDir: server
+
+  # Frontend Static Site
+  - type: web
+    name: discount-tracker-frontend
+    env: static
+    plan: free
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        sync: false  # You'll need to set this manually after backend deploys
