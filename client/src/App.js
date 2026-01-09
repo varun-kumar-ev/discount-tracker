@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from './components/SearchBar';
 import ProductGrid from './components/ProductGrid';
 import LoadingSpinner from './components/LoadingSpinner';
+import { trackPriceHistory } from './utils/priceHistory';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -28,9 +29,6 @@ function App() {
       const baseUrl = API_URL.replace(/\/$/, '');
       const searchUrl = `${baseUrl}/api/search`;
       
-      console.log('Searching with URL:', searchUrl);
-      console.log('API_URL from env:', process.env.REACT_APP_API_URL);
-      
       const response = await fetch(searchUrl, {
         method: 'POST',
         headers: {
@@ -39,20 +37,30 @@ function App() {
         body: JSON.stringify({ query }),
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
-
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Response error:', errorText);
+        console.error('API Error:', errorText);
         throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
-      console.log('Search results:', data);
-      setProducts(data.products || []);
+      
+      // Track price history for products with actual prices
+      const productsWithHistory = data.products.map(product => {
+        // Only track products with actual prices (not search links)
+        if (product.price && 
+            product.price !== 'Click to view prices' && 
+            !product.note &&
+            product.url &&
+            !product.url.includes('/search?')) {
+          trackPriceHistory(product);
+        }
+        return product;
+      });
+      
+      setProducts(productsWithHistory);
     } catch (err) {
-      console.error('Search error details:', err);
+      console.error('Search error:', err);
       setError(err.message || 'An error occurred while searching');
     } finally {
       setLoading(false);

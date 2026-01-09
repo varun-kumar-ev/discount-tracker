@@ -14,14 +14,54 @@
   margin-bottom: 3rem;
 }
 
+.platform-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .platform-header {
   color: white;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   text-transform: capitalize;
+  flex: 1;
+}
+
+.platform-stats {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.status-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.success-badge {
+  background: rgba(46, 213, 115, 0.9);
+  color: white;
+}
+
+.search-link-badge {
+  background: rgba(102, 126, 234, 0.9);
+  color: white;
 }
 
 .error-badge {

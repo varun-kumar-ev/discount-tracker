@@ -8,6 +8,26 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+}
+
+.search-link-card {
+  border: 2px dashed #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.search-link-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .product-card:hover {
@@ -80,10 +100,39 @@
   font-weight: 600;
 }
 
+.product-note {
+  font-size: 0.8rem;
+  color: #667eea;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 6px;
+}
+
 .product-rating {
   font-size: 0.85rem;
   color: #666;
   margin-bottom: 0.5rem;
+}
+
+.price-history {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.price-history.price-increase {
+  background: rgba(255, 107, 107, 0.15);
+  color: #d63031;
+}
+
+.price-history.price-decrease {
+  background: rgba(46, 213, 115, 0.15);
+  color: #00b894;
 }
 
 .product-platform {
