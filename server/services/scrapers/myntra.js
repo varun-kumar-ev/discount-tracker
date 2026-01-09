@@ -46,7 +46,18 @@ async function search(query) {
     return products;
   } catch (error) {
     console.error('Myntra search error:', error.message);
-    return getMockData('myntra', query);
+    // Return search link instead of mock data
+    return [{
+      platform: 'myntra',
+      title: `Search results for "${query}" on Myntra`,
+      price: 'Click to view prices',
+      originalPrice: null,
+      discount: null,
+      rating: null,
+      image: null,
+      url: `https://www.myntra.com/${encodeURIComponent(query)}`,
+      note: 'Unable to fetch product details. Click to view search results on Myntra.',
+    }];
   }
 }
 

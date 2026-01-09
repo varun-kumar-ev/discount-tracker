@@ -46,7 +46,18 @@ async function search(query) {
     return products;
   } catch (error) {
     console.error('Nykaa search error:', error.message);
-    return getMockData('nykaa', query);
+    // Return search link instead of mock data
+    return [{
+      platform: 'nykaa',
+      title: `Search results for "${query}" on Nykaa`,
+      price: 'Click to view prices',
+      originalPrice: null,
+      discount: null,
+      rating: null,
+      image: null,
+      url: `https://www.nykaa.com/search/result/?q=${encodeURIComponent(query)}`,
+      note: 'Unable to fetch product details. Click to view search results on Nykaa.',
+    }];
   }
 }
 

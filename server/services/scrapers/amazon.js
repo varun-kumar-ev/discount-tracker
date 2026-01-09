@@ -46,8 +46,18 @@ async function search(query) {
     return products;
   } catch (error) {
     console.error('Amazon search error:', error.message);
-    // Return mock data for development
-    return getMockData('amazon', query);
+    // Return search link instead of mock data
+    return [{
+      platform: 'amazon',
+      title: `Search results for "${query}" on Amazon`,
+      price: 'Click to view prices',
+      originalPrice: null,
+      discount: null,
+      rating: null,
+      image: null,
+      url: `https://www.amazon.in/s?k=${encodeURIComponent(query)}`,
+      note: 'Unable to fetch product details. Click to view search results on Amazon.',
+    }];
   }
 }
 

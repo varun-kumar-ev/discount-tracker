@@ -47,7 +47,18 @@ async function search(query) {
     return products;
   } catch (error) {
     console.error('Flipkart search error:', error.message);
-    return getMockData('flipkart', query);
+    // Return search link instead of mock data
+    return [{
+      platform: 'flipkart',
+      title: `Search results for "${query}" on Flipkart`,
+      price: 'Click to view prices',
+      originalPrice: null,
+      discount: null,
+      rating: null,
+      image: null,
+      url: `https://www.flipkart.com/search?q=${encodeURIComponent(query)}`,
+      note: 'Unable to fetch product details. Click to view search results on Flipkart.',
+    }];
   }
 }
 
