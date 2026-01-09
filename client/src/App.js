@@ -26,7 +26,12 @@ function App() {
       const API_URL = process.env.REACT_APP_API_URL || '';
       // Remove trailing slash if present
       const baseUrl = API_URL.replace(/\/$/, '');
-      const response = await fetch(`${baseUrl}/api/search`, {
+      const searchUrl = `${baseUrl}/api/search`;
+      
+      console.log('Searching with URL:', searchUrl);
+      console.log('API_URL from env:', process.env.REACT_APP_API_URL);
+      
+      const response = await fetch(searchUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,15 +39,21 @@ function App() {
         body: JSON.stringify({ query }),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       if (!response.ok) {
-        throw new Error('Failed to fetch products');
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
+      console.log('Search results:', data);
       setProducts(data.products || []);
     } catch (err) {
+      console.error('Search error details:', err);
       setError(err.message || 'An error occurred while searching');
-      console.error('Search error:', err);
     } finally {
       setLoading(false);
     }
